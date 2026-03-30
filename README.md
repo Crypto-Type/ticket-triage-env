@@ -49,7 +49,7 @@ Every company receives **hundreds of customer support tickets every day**. Human
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                  AI Agent (My Model)                    │
+│                  AI Agent (your model)                  │
 │                        │                                │
 │              ┌─────────▼──────────┐                     │
 │              │   OpenEnv API      │                     │
