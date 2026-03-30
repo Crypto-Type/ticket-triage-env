@@ -5,20 +5,14 @@ build-backend = "setuptools.backends.legacy:build"
 [project]
 name = "ticket-triage-env"
 version = "1.0.0"
-description = "A real-world customer support ticket triage environment for AI agents using the OpenEnv standard"
+description = "A real-world customer support ticket triage OpenEnv environment"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
 authors = [
     {name = "Aravind S"}
 ]
-keywords = ["openenv", "reinforcement-learning", "ai-agent", "customer-support", "ticket-triage"]
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-]
+keywords = ["openenv", "reinforcement-learning", "ai-agent", "customer-support"]
 dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.23.0",
@@ -28,23 +22,16 @@ dependencies = [
     "requests>=2.31.0",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0",
-    "httpx>=0.24.0",
-]
-
 [project.urls]
 "Homepage" = "https://huggingface.co/spaces/aadhesh2025/ticket-triage-env"
 "Repository" = "https://github.com/Crypto-Type/ticket-triage-env"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["*.py"]
 
 [openenv]
 name = "ticket-triage-env"
 version = "1.0.0"
+config = "openenv.yaml"
 entry_point = "main:app"
 framework = "fastapi"
-tasks = ["task1_categorize", "task2_prioritize", "task3_full_triage"]
