@@ -1,18 +1,3 @@
-Title: Ticket Triage Env
-emoji: 🎫
-colorFrom: blue
-colorTo: purple
-sdk: docker
-pinned: false
-tags:
-  - openenv
-  - reinforcement-learning
-  - ai-agent
-  - customer-support
-  - nlp
----
-
-<div align="center">
 
 # 🎫 Ticket Triage OpenEnv
 
