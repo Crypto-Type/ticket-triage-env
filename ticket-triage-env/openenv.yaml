@@ -1,57 +1,111 @@
 name: ticket-triage-env
 version: "1.0.0"
-description: >
-  A real-world customer support ticket triage environment.
-  An AI agent reads support tickets and must classify them,
-  assign priority, and optionally write a customer reply.
+description: "A real-world customer support ticket triage environment where AI agents classify, prioritize, and respond to support tickets."
+author: "Aravind S"
+license: "MIT"
+tags:
+  - openenv
+  - customer-support
+  - nlp
+  - classification
+  - reinforcement-learning
 
-author: Aravind S
-license: MIT
+environment:
+  entry_point: "main:app"
+  framework: "fastapi"
+  port: 7860
+  python_version: "3.11"
+
+api:
+  base_url: "/"
+  endpoints:
+    reset:
+      method: POST
+      path: /reset
+      description: "Start a new episode. Returns observation."
+    step:
+      method: POST
+      path: /step
+      description: "Submit an action. Returns observation, reward, done, info."
+    state:
+      method: GET
+      path: /state
+      description: "Get current environment state."
+    tasks:
+      method: GET
+      path: /tasks
+      description: "List all available tasks."
+    grader:
+      method: GET
+      path: /grader
+      description: "Get the grader score for last episode."
+    baseline:
+      method: GET
+      path: /baseline
+      description: "Run baseline agent on all tasks."
+
+observation_space:
+  type: object
+  properties:
+    ticket_id:
+      type: string
+      description: "Unique identifier for the ticket"
+    subject:
+      type: string
+      description: "Subject line of the support ticket"
+    body:
+      type: string
+      description: "Full body text of the support ticket"
+
+action_space:
+  type: object
+  properties:
+    category:
+      type: string
+      enum: ["billing", "technical", "general"]
+      description: "Category of the support ticket"
+    priority:
+      type: string
+      enum: ["low", "medium", "high"]
+      description: "Priority level (required for task2 and task3)"
+    reply:
+      type: string
+      description: "Customer reply text, minimum 10 words (required for task3)"
+
+reward:
+  type: float
+  min: 0.0
+  max: 1.0
+  description: "Partial credit score. Each correct field contributes equally."
 
 tasks:
   - task_id: task1_categorize
-    name: Ticket Categorization
+    name: "Ticket Categorization"
+    description: "Classify the support ticket into billing, technical, or general"
     difficulty: easy
-    description: Classify the support ticket into billing, technical, or general
     reward_range: [0.0, 1.0]
     action_schema:
       category: "string — one of: billing | technical | general"
 
   - task_id: task2_prioritize
-    name: Ticket Categorization + Priority
+    name: "Ticket Categorization and Priority"
+    description: "Classify the ticket and assign a priority level"
     difficulty: medium
-    description: Classify the ticket AND assign a priority level
     reward_range: [0.0, 1.0]
     action_schema:
       category: "string — one of: billing | technical | general"
       priority: "string — one of: low | medium | high"
 
   - task_id: task3_full_triage
-    name: Full Ticket Triage
+    name: "Full Ticket Triage"
+    description: "Classify, prioritize, and write a short helpful customer reply"
     difficulty: hard
-    description: Classify, prioritize, AND write a short customer reply
     reward_range: [0.0, 1.0]
     action_schema:
       category: "string — one of: billing | technical | general"
       priority: "string — one of: low | medium | high"
-      reply: "string — a short helpful reply to the customer (min 10 words)"
+      reply: "string — helpful reply to customer, minimum 10 words"
 
-api:
-  reset: POST /reset
-  step:  POST /step
-  state: GET  /state
-  tasks: GET  /tasks
-  grader:   GET /grader
-  baseline: GET /baseline
-
-observation_space:
-  ticket_id: string
-  subject:   string
-  body:      string
-
-reward:
-  type: float
-  range: [0.0, 1.0]
-  description: >
-    Partial credit based on correctness of category, priority,
-    and minimum reply length. Each component contributes equally.
+episode:
+  max_steps: 1
+  reset_on_done: true
