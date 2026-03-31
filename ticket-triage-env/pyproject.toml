@@ -20,7 +20,12 @@ dependencies = [
     "pyyaml>=6.0",
     "openai>=1.0.0",
     "requests>=2.31.0",
+    "openenv-core>=0.2.0",
 ]
+
+[project.scripts]
+serve = "server.app:main"
+start = "server.app:main"
 
 [project.urls]
 "Homepage" = "https://huggingface.co/spaces/aadhesh2025/ticket-triage-env"
@@ -33,5 +38,5 @@ where = ["."]
 name = "ticket-triage-env"
 version = "1.0.0"
 config = "openenv.yaml"
-entry_point = "main:app"
+entry_point = "server.app:main"
 framework = "fastapi"
