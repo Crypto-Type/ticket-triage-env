@@ -24,8 +24,7 @@ dependencies = [
 ]
 
 [project.scripts]
-serve = "server.app:main"
-start = "server.app:main"
+server = "server.app:main"
 
 [project.urls]
 "Homepage" = "https://huggingface.co/spaces/aadhesh2025/ticket-triage-env"
@@ -33,6 +32,7 @@ start = "server.app:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["server*"]
 
 [openenv]
 name = "ticket-triage-env"
